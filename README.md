@@ -1,24 +1,17 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+require 'test_helper'
+ 
+# put this test in test/integration/bitly_shortener_test.rb
+# run tests with "bundle exec rake test"
+class BitlyShortenerTest < ActionDispatch::IntegrationTest
+  test 'it shortens URLs' do
+    original = 'http://en.wikipedia.org/wiki/Sports_game'
+    post '/', params: { url: original }
+ 
+    assert_response 201
+    shortened = response.headers['Location']
+    assert shortened.length < original.length, 'URL is actually shorter'
+ 
+    get '/', params: { shortened: shortened }
+    assert_redirected_to original
+  end
+end
