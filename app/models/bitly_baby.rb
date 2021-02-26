@@ -1,0 +1,2 @@
+class BitlyBaby < ApplicationRecord
+end
