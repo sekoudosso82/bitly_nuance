@@ -15,3 +15,6 @@ class BitlyShortenerTest < ActionDispatch::IntegrationTest
     assert_redirected_to original
   end
 end
+
+
+bundle exec rake test
